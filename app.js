@@ -1,7 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+// const bodyParser = require("body-parser");
 require("dotenv").config();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 //Import Routes
 const postsRoute = require("./routes/posts")
@@ -19,9 +23,9 @@ app.get("/", (req, res) => {
   res.send("we are on home");
 })
 
-app.get("/posts", (req, res) => {
-  res.send("we are on posts");
-})
+// app.get("/posts", (req, res) => {
+//   res.send("we are on posts");
+// })
 
 //Connect to DB
 mongoose.connect("process.env.MONGO_URI", { useNewUrlParser: true }, () => {
