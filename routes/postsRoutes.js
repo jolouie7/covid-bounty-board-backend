@@ -23,9 +23,10 @@ router.get("/", async (req, res) => {
 // });
 
 // create a post
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
   // retrieve the data from the req
-  const { title, location, description, date, contactInfo } = req.body;
+  const { title, location, description, contactInfo } = req.body;
+  const date = Date.now();
 
   // construct the post
   const newPost = new Post({

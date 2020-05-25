@@ -1,8 +1,11 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
+
+const app = express();
+// ! fix: process.env.DB_HOST is giving access errors
+const port = process.env.DB_HOST || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -23,9 +26,13 @@ app.get("/", (req, res) => {
 })
 
 //Connect to DB
-mongoose.connect("process.env.MONGO_URI", { useNewUrlParser: true }, () => {
-  console.log("Connected to DB!!!!")
-});
+mongoose.connect(
+  process.env.MONGO_URI,
+  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
+  () => {
+    console.log("Connected to DB!!!!");
+  }
+);
 
 //Listen to server
 app.listen(5000, () => {
