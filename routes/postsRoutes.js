@@ -47,6 +47,7 @@ router.post("/add", async (req, res) => {
 });
 
 // update post
+// I think, You only need to update 1 attribute of a post and it will work
 router.patch("/:id", async (req, res) => {
   try {
     await Post.findByIdAndUpdate(req.params.id, req.body, {
@@ -55,22 +56,21 @@ router.patch("/:id", async (req, res) => {
     // const savedPost = await Post.save();
     res.send("Post Updated!");
   } catch (err) {
-    res.status(500).send(err);
+    res.status(400).send("Error: " + err);
   }
 });
 
 //delete post
-router.delete("/:id", (req, res) => {
-  Post.findById(req.params.id, (err, post) => {
-    post.remove((err) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.status(204).send("removed");
-      }
-    });
+router.delete("/:id", async (req, res) => {
+  try {
+    // you can also use findByIdandDelete
+    const post = await Post.findById(req.params.id);
+    const deletePost = await post.remove()
+    res.json(deletePost)
+  } catch (err) {
+    res.status(400).send("Error: " + err)
+  }
   });
-});
 
 module.exports = router;
 
