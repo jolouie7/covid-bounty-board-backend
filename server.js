@@ -1,16 +1,15 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const mongoose = require("mongoose");
-// const bodyParser = require("body-parser");
 require("dotenv").config();
 
-app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //Import Routes
-const postsRoute = require("./routes/posts")
-
-app.use("/posts", postsRoute);
+app.use("/posts", require("./routes/postsRoutes.js"));
 
 
 // //MIDDLEWARE
@@ -23,16 +22,12 @@ app.get("/", (req, res) => {
   res.send("we are on home");
 })
 
-// app.get("/posts", (req, res) => {
-//   res.send("we are on posts");
-// })
-
 //Connect to DB
 mongoose.connect("process.env.MONGO_URI", { useNewUrlParser: true }, () => {
   console.log("Connected to DB!!!!")
 });
 
 //Listen to server
-app.listen(3000, () => {
-  console.log("Server is listening on port 3000...")
+app.listen(5000, () => {
+  console.log("Server is listening on port 5000...")
 })
