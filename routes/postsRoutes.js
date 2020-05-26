@@ -11,6 +11,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+//get a single post
+router.get("/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    res.json(post)
+  } catch (err) {
+    res.status(400).json("Error " + err)
+  }
+})
+
 // router.post("/", async (req, res) => {
 //   const postData = new Post(req.body);
 
@@ -73,6 +83,3 @@ router.delete("/:id", async (req, res) => {
   });
 
 module.exports = router;
-
-//TODO: TEST POST REQUESTS WITH POSTMAN
-//TODO: CREATE MORE ENDPOINTS
