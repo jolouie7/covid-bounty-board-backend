@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //Import Routes
 app.use("/posts", require("./routes/postsRoutes.js"));
+app.use("/users", require("./routes/usersRoutes"))
 
 
 // //MIDDLEWARE
